@@ -19,8 +19,8 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
   img.header.h = CANVAS_HEIGHT;
 
   lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
-  lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, -1, 0,
-                      CANVAS_HEIGHT / 2, CANVAS_HEIGHT / 2, false);
+  /*lv_canvas_transform(canvas, &img, 900, LV_SCALE_NONE, -1, 0,*/
+                      /*CANVAS_HEIGHT / 2, CANVAS_HEIGHT / 2, false);*/
 }
 
 void draw_background(lv_obj_t *canvas) {
