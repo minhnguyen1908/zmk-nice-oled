@@ -33,7 +33,8 @@ static void draw_canvas(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     draw_battery_status(canvas, state);
 
     // Rotate for horizontal display
-    rotate_canvas(canvas, cbuf);
+    /*rotate_canvas(canvas, cbuf);*/
+    rotate_canvas(canvas, (lv_image_dsc_t*)cbuf);
 }
 
 /**
@@ -110,7 +111,8 @@ int zmk_widget_screen_init(struct zmk_widget_screen *widget, lv_obj_t *parent) {
 
     lv_obj_t *canvas = lv_canvas_create(widget->obj);
     lv_obj_align(canvas, LV_ALIGN_TOP_LEFT, 0, 0);
-    lv_canvas_set_buffer(canvas, widget->cbuf, CANVAS_HEIGHT, CANVAS_HEIGHT, LV_IMG_CF_TRUE_COLOR);
+    /*lv_canvas_set_buffer(canvas, widget->cbuf, CANVAS_HEIGHT, CANVAS_HEIGHT, LV_IMG_CF_TRUE_COLOR);*/
+    lv_canvas_set_buffer(canvas, widget->cbuf, CANVAS_HEIGHT, CANVAS_HEIGHT, LV_COLOR_FORMAT_NATIVE);
 
     sys_slist_append(&widgets, &widget->node);
     draw_animation(canvas, widget);
