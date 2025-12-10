@@ -111,8 +111,23 @@ static void draw_charging_level(lv_obj_t *canvas, const struct status_state *sta
     // sprintf(text, "%i%%", state->battery);
     /*lv_canvas_draw_text(canvas, 0, 50, 35, &label_right_dsc, text);*/
     // lv_canvas_draw_text(canvas, 1, 50, 35, &label_right_dsc, text);
-    lv_canvas_draw_image(canvas, 25, 50, &bolt, &img_dsc);
+    /*lv_canvas_draw_image(canvas, 25, 50, &bolt, &img_dsc);*/
     // lv_canvas_draw_image(canvas, 0, 50, &bolt, &img_dsc);
+
+    // NEW Image Drawing Logic for the Bolt Icon
+    lv_layer_t layer_bolt;
+    lv_canvas_init_layer(canvas, &layer_bolt);
+
+    lv_draw_image_dsc_t bolt_dsc;
+    lv_draw_image_dsc_init(&bolt_dsc);
+    bolt_dsc.src = &bolt; // Set the source image
+
+    // Define coordinates for the bolt (x=25, y=50)
+    // Width/Height should match the 'bolt' image dimensions. 
+    // Assuming bolt is roughly 10x20 pixels based on context. Adjust if it looks cut off!
+    lv_area_t bolt_coords = {25, 50, 25 + 10, 50 + 20}; 
+
+    lv_draw_image(&layer_bolt, &bolt_dsc, &bolt_coords);
 }
 
 void draw_battery_status(lv_obj_t *canvas, const struct status_state *state) {
