@@ -17,7 +17,7 @@ static void draw_gauge(lv_obj_t *canvas, const struct status_state *state) {
     lv_area_t coords = {0, 70, 0 + gauge.header.w - 1, 70 + gauge.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
     
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_needle(lv_obj_t *canvas, const struct status_state *state) {
@@ -54,7 +54,7 @@ static void draw_needle(lv_obj_t *canvas, const struct status_state *state) {
     
     lv_draw_line(&layer, &line_dsc);
     
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 #if !IS_ENABLED(CONFIG_NICE_OLED_WIDGET_WPM_LUNA)
@@ -68,7 +68,7 @@ static void draw_grid(lv_obj_t *canvas) {
     lv_area_t coords = {-1, 95, -1 + grid.header.w - 1, 95 + grid.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
     
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_graph(lv_obj_t *canvas, const struct status_state *state) {
@@ -99,7 +99,7 @@ static void draw_graph(lv_obj_t *canvas, const struct status_state *state) {
         lv_draw_line(&layer, &line_dsc);
     }
     
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 #endif
 
@@ -118,7 +118,7 @@ static void draw_label(lv_obj_t *canvas, const struct status_state *state) {
     lv_area_t coords = {x_pos, 75, x_pos + 50, 75 + 20};
     lv_draw_label(&layer, &label_dsc, &coords);
     
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 void draw_wpm_status(lv_obj_t *canvas, const struct status_state *state) {

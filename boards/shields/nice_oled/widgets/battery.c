@@ -5,65 +5,7 @@
 
 LV_IMAGE_DECLARE(bolt);
 
-#if IS_ENABLED(CONFIG_NICE_OLED_GEM_ANIMATION_SMART_BATTERY)
-LV_IMAGE_DECLARE(crystal_01);
-LV_IMAGE_DECLARE(crystal_02);
-LV_IMAGE_DECLARE(crystal_03);
-LV_IMAGE_DECLARE(crystal_04);
-LV_IMAGE_DECLARE(crystal_05);
-LV_IMAGE_DECLARE(crystal_06);
-LV_IMAGE_DECLARE(crystal_07);
-LV_IMAGE_DECLARE(crystal_08);
-LV_IMAGE_DECLARE(crystal_09);
-LV_IMAGE_DECLARE(crystal_10);
-LV_IMAGE_DECLARE(crystal_11);
-LV_IMAGE_DECLARE(crystal_12);
-LV_IMAGE_DECLARE(crystal_13);
-LV_IMAGE_DECLARE(crystal_14);
-LV_IMAGE_DECLARE(crystal_15);
-LV_IMAGE_DECLARE(crystal_16);
-
-#ifndef SET_ANIMATION_SMART_BATTERY_OFF
-#define SET_ANIMATION_SMART_BATTERY_OFF &crystal_01
-#endif
-
-const lv_image_dsc_t *crystal_imgs_test[] = {
-    &crystal_01, &crystal_02, &crystal_03, &crystal_04, &crystal_05, &crystal_06,
-    &crystal_07, &crystal_08, &crystal_09, &crystal_10, &crystal_11, &crystal_12,
-    &crystal_13, &crystal_14, &crystal_15, &crystal_16,
-};
-
-static lv_obj_t *art = NULL;
-static lv_obj_t *art2 = NULL;
-
-static void animation_smart_battery_on(lv_obj_t *canvas) {
-    if (art2) {
-        lv_obj_del(art2);
-        art2 = NULL;
-    }
-    art = lv_animimg_create(canvas);
-    lv_obj_center(art);
-
-    lv_animimg_set_src(art, (const void **)crystal_imgs_test, 16);
-    lv_animimg_set_duration(art, CONFIG_NICE_OLED_GEM_ANIMATION_MS);
-    lv_animimg_set_repeat_count(art, LV_ANIM_REPEAT_INFINITE);
-    lv_animimg_start(art);
-    lv_obj_align(art, LV_ALIGN_TOP_LEFT, 18, -18);
-}
-
-static void animation_smart_battery_off(lv_obj_t *canvas) {
-    if (art) {
-        lv_obj_del(art);
-        art = NULL;
-    }
-    art2 = lv_image_create(canvas);
-    lv_image_set_src(art2, SET_ANIMATION_SMART_BATTERY_OFF);
-    lv_obj_align(art2, LV_ALIGN_TOP_LEFT, 18, -18);
-}
-#endif
-
 static void draw_level(lv_obj_t *canvas, const struct status_state *state) {
-    // 1. Declare and Init Layer (FIXED)
     lv_layer_t layer;
     lv_canvas_init_layer(canvas, &layer);
 
@@ -74,15 +16,13 @@ static void draw_level(lv_obj_t *canvas, const struct status_state *state) {
     sprintf(text, "%i%%", state->battery);
     label_right_dsc.text = text;
 
-    lv_area_t coords = {0, 50, 0 + 42, 50 + 20}; 
+    lv_area_t coords = {0, 50, 42, 50 + 20}; 
     lv_draw_label(&layer, &label_right_dsc, &coords);
-
-    // 2. Finish Layer
+    
     lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_charging_level(lv_obj_t *canvas, const struct status_state *state) {
-    // 1. Declare and Init Layer (FIXED)
     lv_layer_t layer;
     lv_canvas_init_layer(canvas, &layer);
 
@@ -96,26 +36,19 @@ static void draw_charging_level(lv_obj_t *canvas, const struct status_state *sta
     sprintf(text, "%i", state->battery);
     label_right_dsc.text = text;
 
-    lv_area_t text_coords = {0, 50, 0 + 35, 50 + 20};
+    lv_area_t text_coords = {0, 50, 35, 70};
     lv_draw_label(&layer, &label_right_dsc, &text_coords);
 
     lv_area_t img_coords = {25, 50, 25 + bolt.header.w - 1, 50 + bolt.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &img_coords);
-
-    // 2. Finish Layer
+    
     lv_canvas_finish_layer(canvas, &layer);
 }
 
 void draw_battery_status(lv_obj_t *canvas, const struct status_state *state) {
     if (state->charging) {
         draw_charging_level(canvas, state);
-#if IS_ENABLED(CONFIG_NICE_OLED_GEM_ANIMATION_SMART_BATTERY)
-        animation_smart_battery_on(canvas);
-#endif
     } else {
         draw_level(canvas, state);
-#if IS_ENABLED(CONFIG_NICE_OLED_GEM_ANIMATION_SMART_BATTERY)
-        animation_smart_battery_off(canvas);
-#endif
     }
 }

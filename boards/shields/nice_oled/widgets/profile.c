@@ -15,7 +15,7 @@ static void draw_inactive_profiles(lv_obj_t *canvas, const struct status_state *
     lv_area_t coords = {0, 137, 0 + profiles.header.w - 1, 137 + profiles.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
     
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_active_profile(lv_obj_t *canvas, const struct status_state *state) {
@@ -26,11 +26,10 @@ static void draw_active_profile(lv_obj_t *canvas, const struct status_state *sta
     init_rect_dsc(&rect_dsc, LVGL_FOREGROUND);
 
     int offset = state->active_profile_index * 7;
-    
     lv_area_t coords = {0 + offset, 137, 0 + offset + 3, 137 + 3};
     lv_draw_rect(&layer, &rect_dsc, &coords);
     
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_active_profile_text(lv_obj_t *canvas, const struct status_state *state) {
@@ -47,7 +46,7 @@ static void draw_active_profile_text(lv_obj_t *canvas, const struct status_state
     lv_area_t coords = {25, 32, 25 + 35, 32 + 20}; 
     lv_draw_label(&layer, &label_dsc, &coords);
     
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 void draw_profile_status(lv_obj_t *canvas, const struct status_state *state) {
