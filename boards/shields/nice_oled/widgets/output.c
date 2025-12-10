@@ -18,6 +18,9 @@ static void draw_usb_connected(lv_obj_t *canvas) {
 
     lv_area_t coords = {0, 34, 0 + usb.header.w - 1, 34 + usb.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
+    
+    // CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_ble_unbonded(lv_obj_t *canvas) {
@@ -30,6 +33,9 @@ static void draw_ble_unbonded(lv_obj_t *canvas) {
 
     lv_area_t coords = {-1, 32, -1 + bt_unbonded.header.w - 1, 32 + bt_unbonded.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
+    
+    // CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 #endif
 
@@ -43,6 +49,9 @@ static void draw_ble_disconnected(lv_obj_t *canvas) {
 
     lv_area_t coords = {4, 32, 4 + bt_no_signal.header.w - 1, 32 + bt_no_signal.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
+    
+    // CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_ble_connected(lv_obj_t *canvas) {
@@ -55,6 +64,9 @@ static void draw_ble_connected(lv_obj_t *canvas) {
 
     lv_area_t coords = {4, 32, 4 + bt.header.w - 1, 32 + bt.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
+    
+    // CRITICAL FIX
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 void draw_output_status(lv_obj_t *canvas, const struct status_state *state) {

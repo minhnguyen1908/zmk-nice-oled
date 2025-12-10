@@ -8,7 +8,6 @@ void to_uppercase(char *str) {
 }
 
 void rotate_canvas(lv_obj_t *canvas, lv_image_dsc_t *img) {
-    // LVGL 9 removed direct canvas transformation.
     (void)canvas;
     (void)img;
 }
@@ -22,6 +21,9 @@ void draw_background(lv_obj_t *canvas) {
 
     lv_area_t coords = {0, 0, CANVAS_WIDTH - 1, CANVAS_HEIGHT - 1};
     lv_draw_rect(&layer, &draw_dsc, &coords);
+    
+    // CRITICAL FIX: Finish the layer!
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 void init_rect_dsc(lv_draw_rect_dsc_t *rect_dsc, lv_color_t bg_color) {
@@ -29,7 +31,6 @@ void init_rect_dsc(lv_draw_rect_dsc_t *rect_dsc, lv_color_t bg_color) {
     rect_dsc->bg_color = bg_color;
 }
 
-// THIS WAS MISSING!
 void init_line_dsc(lv_draw_line_dsc_t *line_dsc, lv_color_t color, uint8_t width) {
     lv_draw_line_dsc_init(line_dsc);
     line_dsc->color = color;
