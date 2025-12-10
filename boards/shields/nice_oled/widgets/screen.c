@@ -72,14 +72,16 @@ static void draw_canvas(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     /*rotate_canvas(canvas, cbuf);*/
     // We temporarily cast to void* because we disabled the rotation logic in util.c
     // Create a temporary image descriptor for the raw buffer
+    // 1. Wrap the raw buffer in a temporary descriptor
     lv_image_dsc_t temp_img = {
         .header.cf = LV_COLOR_FORMAT_NATIVE,
-        .header.w = CANVAS_WIDTH,
-        .header.h = CANVAS_HEIGHT,
+        .header.w = CANVAS_WIDTH,  // 68
+        .header.h = CANVAS_HEIGHT, // 160
         .data = (const uint8_t *)cbuf,
         .data_size = CANVAS_WIDTH * CANVAS_HEIGHT * sizeof(lv_color_t),
     };
-    //rotate_canvas(canvas, (lv_image_dsc_t*)cbuf);
+
+    // 2. Send the safe struct to be rotated
     rotate_canvas(canvas, &temp_img);
 }
 
@@ -224,7 +226,7 @@ int zmk_widget_screen_init(struct zmk_widget_screen *widget, lv_obj_t *parent) {
     lv_obj_t *canvas = lv_canvas_create(widget->obj);
     lv_obj_align(canvas, LV_ALIGN_TOP_LEFT, 0, 0);
     /*lv_canvas_set_buffer(canvas, widget->cbuf, CANVAS_HEIGHT, CANVAS_HEIGHT, LV_IMG_CF_TRUE_COLOR);*/
-    lv_canvas_set_buffer(canvas, widget->cbuf, CANVAS_HEIGHT, CANVAS_HEIGHT, LV_COLOR_FORMAT_NATIVE);
+    lv_canvas_set_buffer(canvas, widget->cbuf, CANVAS_WIDTH, CANVAS_HEIGHT, LV_COLOR_FORMAT_NATIVE);
 
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
