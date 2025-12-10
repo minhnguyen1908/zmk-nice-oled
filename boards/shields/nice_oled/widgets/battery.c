@@ -2,33 +2,33 @@
 #include "../assets/custom_fonts.h"
 #include <zephyr/kernel.h>
 
-LV_IMG_DECLARE(bolt);
+LV_IMAGE_DECLARE(bolt);
 
 #if IS_ENABLED(CONFIG_NICE_OLED_GEM_ANIMATION_SMART_BATTERY)
 // Work at how it is expected, but after disconnecting the keyboard 3 times it is fried
 // CONFIG_NICE_OLED_GEM_ANIMATION
-LV_IMG_DECLARE(crystal_01);
-LV_IMG_DECLARE(crystal_02);
-LV_IMG_DECLARE(crystal_03);
-LV_IMG_DECLARE(crystal_04);
-LV_IMG_DECLARE(crystal_05);
-LV_IMG_DECLARE(crystal_06);
-LV_IMG_DECLARE(crystal_07);
-LV_IMG_DECLARE(crystal_08);
-LV_IMG_DECLARE(crystal_09);
-LV_IMG_DECLARE(crystal_10);
-LV_IMG_DECLARE(crystal_11);
-LV_IMG_DECLARE(crystal_12);
-LV_IMG_DECLARE(crystal_13);
-LV_IMG_DECLARE(crystal_14);
-LV_IMG_DECLARE(crystal_15);
-LV_IMG_DECLARE(crystal_16);
+LV_IMAGE_DECLARE(crystal_01);
+LV_IMAGE_DECLARE(crystal_02);
+LV_IMAGE_DECLARE(crystal_03);
+LV_IMAGE_DECLARE(crystal_04);
+LV_IMAGE_DECLARE(crystal_05);
+LV_IMAGE_DECLARE(crystal_06);
+LV_IMAGE_DECLARE(crystal_07);
+LV_IMAGE_DECLARE(crystal_08);
+LV_IMAGE_DECLARE(crystal_09);
+LV_IMAGE_DECLARE(crystal_10);
+LV_IMAGE_DECLARE(crystal_11);
+LV_IMAGE_DECLARE(crystal_12);
+LV_IMAGE_DECLARE(crystal_13);
+LV_IMAGE_DECLARE(crystal_14);
+LV_IMAGE_DECLARE(crystal_15);
+LV_IMAGE_DECLARE(crystal_16);
 
 #ifndef SET_ANIMATION_SMART_BATTERY_OFF
 #define SET_ANIMATION_SMART_BATTERY_OFF &crystal_01
 #endif
 
-const lv_img_dsc_t *crystal_imgs_test[] = {
+const lv_image_dsc_t *crystal_imgs_test[] = {
     &crystal_01, &crystal_02, &crystal_03, &crystal_04, &crystal_05, &crystal_06,
     &crystal_07, &crystal_08, &crystal_09, &crystal_10, &crystal_11, &crystal_12,
     &crystal_13, &crystal_14, &crystal_15, &crystal_16,
@@ -58,13 +58,13 @@ static void animation_smart_battery_off(lv_obj_t *canvas) {
         art = NULL;
     }
     /*
-    lv_draw_img_dsc_t img_dsc;
-    lv_draw_img_dsc_init(&img_dsc);
-    lv_canvas_draw_img(canvas, 18, -18, SET_ANIMATION_SMART_BATTERY_OFF, &img_dsc);
+    lv_draw_image_dsc_t img_dsc;
+    lv_draw_image_dsc_init(&img_dsc);
+    lv_canvas_draw_image(canvas, 18, -18, SET_ANIMATION_SMART_BATTERY_OFF, &img_dsc);
     */
 
-    art2 = lv_img_create(canvas);
-    lv_img_set_src(art2, SET_ANIMATION_SMART_BATTERY_OFF);
+    art2 = lv_image_create(canvas);
+    lv_image_set_src(art2, SET_ANIMATION_SMART_BATTERY_OFF);
     lv_obj_align(art2, LV_ALIGN_TOP_LEFT, 18, -18);
 }
 #endif
@@ -79,13 +79,28 @@ static void draw_level(lv_obj_t *canvas, const struct status_state *state) {
     sprintf(text, "%i%%", state->battery);
     // sprintf(text, "%i%%", state->battery);
     // x, y, width, dsc, text
-    lv_canvas_draw_text(canvas, 0, 50, 42, &label_right_dsc, text);
+    /*lv_canvas_draw_text(canvas, 0, 50, 42, &label_right_dsc, text);*/
     // lv_canvas_draw_text(canvas, -6, 50, 42, &label_right_dsc, text);
+
+    // 1. Initialize a "Layer" that points to the Canvas buffer
+    lv_layer_t layer;
+    lv_canvas_init_layer(canvas, &layer);
+
+    // 2. Set the text inside the description (New LVGL 9 requirement)
+    label_right_dsc.text = text;
+
+    // 3. Define the area where the text should appear
+    // Syntax: {x1, y1, x2, y2}
+    // We use 0, 50 as start. Width is 42. Height is roughly 20 (safe guess for font)
+    lv_area_t coords = {0, 50, 0 + 42, 50 + 20};
+
+    // 4.send the draw task to the layer
+    lv_draw_label(&layer, &label_right_dsc, &coords);
 }
 
 static void draw_charging_level(lv_obj_t *canvas, const struct status_state *state) {
-    lv_draw_img_dsc_t img_dsc;
-    lv_draw_img_dsc_init(&img_dsc);
+    lv_draw_image_dsc_t img_dsc;
+    lv_draw_image_dsc_init(&img_dsc);
     lv_draw_label_dsc_t label_right_dsc;
     init_label_dsc(&label_right_dsc, LVGL_FOREGROUND, &pixel_operator_mono, LV_TEXT_ALIGN_LEFT);
     // LV_TEXT_ALIGN_RIGHT);
@@ -96,8 +111,8 @@ static void draw_charging_level(lv_obj_t *canvas, const struct status_state *sta
     // sprintf(text, "%i%%", state->battery);
     lv_canvas_draw_text(canvas, 0, 50, 35, &label_right_dsc, text);
     // lv_canvas_draw_text(canvas, 1, 50, 35, &label_right_dsc, text);
-    lv_canvas_draw_img(canvas, 25, 50, &bolt, &img_dsc);
-    // lv_canvas_draw_img(canvas, 0, 50, &bolt, &img_dsc);
+    lv_canvas_draw_image(canvas, 25, 50, &bolt, &img_dsc);
+    // lv_canvas_draw_image(canvas, 0, 50, &bolt, &img_dsc);
 }
 
 void draw_battery_status(lv_obj_t *canvas, const struct status_state *state) {
