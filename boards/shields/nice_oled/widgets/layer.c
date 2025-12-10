@@ -21,7 +21,7 @@ void draw_layer_status(lv_obj_t *canvas, const struct status_state *state) {
     }
 
     label_dsc.text = text;
-    lv_area_t coords = {0, 146, 68, 146 + 20};
+    lv_area_t coords = {0, 105, 32, 125};
     lv_draw_label(&layer, &label_dsc, &coords);
     
     lv_canvas_finish_layer(canvas, &layer);
