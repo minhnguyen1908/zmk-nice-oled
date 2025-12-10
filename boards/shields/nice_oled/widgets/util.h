@@ -40,4 +40,4 @@ void init_line_dsc(lv_draw_line_dsc_t *line_dsc, lv_color_t color,
 void init_label_dsc(lv_draw_label_dsc_t *label_dsc, lv_color_t color,
                     const lv_font_t *font, lv_text_align_t align);
 //Fix for new version 4.1.0
-void init_image_dsc(lv_draw_image_dsc_t *image_dsc, const void *src)
+void init_image_dsc(lv_draw_image_dsc_t *image_dsc, const void *src);
