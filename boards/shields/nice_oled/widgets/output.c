@@ -9,8 +9,8 @@ LV_IMG_DECLARE(usb);
 
 #if !IS_ENABLED(CONFIG_ZMK_SPLIT) || IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 static void draw_usb_connected(lv_obj_t *canvas) {
-  lv_draw_image_dsc_t img_dsc;
-  lv_draw_image_dsc_init(&img_dsc);
+  /*lv_draw_image_dsc_t img_dsc;*/
+  /*lv_draw_image_dsc_init(&img_dsc);*/
 
   /*lv_canvas_draw_image(canvas, 0, 34, &usb, &img_dsc);*/
   // lv_canvas_draw_image(canvas, 45, 2, &usb, &img_dsc);
