@@ -71,7 +71,16 @@ static void draw_canvas(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Rotate for horizontal display
     /*rotate_canvas(canvas, cbuf);*/
     // We temporarily cast to void* because we disabled the rotation logic in util.c
-    rotate_canvas(canvas, (lv_image_dsc_t*)cbuf);
+    // Create a temporary image descriptor for the raw buffer
+    lv_image_dsc_t temp_img = {
+        .header.cf = LV_COLOR_FORMAT_NATIVE,
+        .header.w = CANVAS_WIDTH,
+        .header.h = CANVAS_HEIGHT,
+        .data = (const uint8_t *)cbuf,
+        .data_size = CANVAS_WIDTH * CANVAS_HEIGHT * sizeof(lv_color_t),
+    };
+    //rotate_canvas(canvas, (lv_image_dsc_t*)cbuf);
+    rotate_canvas(canvas, &temp_img);
 }
 
 /**

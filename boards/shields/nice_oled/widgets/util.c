@@ -8,8 +8,30 @@ void to_uppercase(char *str) {
 }
 
 void rotate_canvas(lv_obj_t *canvas, lv_image_dsc_t *img) {
-    (void)canvas;
-    (void)img;
+    // 1. Create a layer for the canvas
+    lv_layer_t layer;
+    lv_canvas_init_layer(canvas, &layer);
+
+    // 2. Configure drawing descriptor for rotation
+    lv_draw_image_dsc_t draw_dsc;
+    lv_draw_image_dsc_init(&draw_dsc);
+    draw_dsc.src = img;
+    
+    // Rotation is in 0.1 degree units (900 = 90 degrees)
+    draw_dsc.rotation = 900; 
+    
+    // Set pivot point to the center of the destination area
+    // Adjust these based on your specific screen offsets if needed
+    draw_dsc.pivot.x = CANVAS_HEIGHT / 2; 
+    draw_dsc.pivot.y = CANVAS_WIDTH / 2;
+
+    // 3. Define the destination area
+    // Note: We are drawing onto the physical horizontal screen now
+    lv_area_t coords = {0, 0, CANVAS_HEIGHT - 1, CANVAS_WIDTH - 1};
+
+    // 4. Draw and Finish
+    lv_draw_image(&layer, &draw_dsc, &coords);
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 void draw_background(lv_obj_t *canvas) {
