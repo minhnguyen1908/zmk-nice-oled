@@ -96,6 +96,7 @@ static void draw_level(lv_obj_t *canvas, const struct status_state *state) {
 
     // 4.send the draw task to the layer
     lv_draw_label(&layer, &label_right_dsc, &coords);
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_charging_level(lv_obj_t *canvas, const struct status_state *state) {
@@ -128,6 +129,7 @@ static void draw_charging_level(lv_obj_t *canvas, const struct status_state *sta
     lv_area_t bolt_coords = {25, 50, 25 + 10, 50 + 20}; 
 
     lv_draw_image(&layer_bolt, &bolt_dsc, &bolt_coords);
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 void draw_battery_status(lv_obj_t *canvas, const struct status_state *state) {

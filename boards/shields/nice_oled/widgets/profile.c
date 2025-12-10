@@ -23,6 +23,7 @@ static void draw_inactive_profiles(lv_obj_t *canvas,
 
     lv_area_t coords = {0, 137, 0 + profiles.header.w - 1, 137 + profiles.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_active_profile(lv_obj_t *canvas,
@@ -47,6 +48,7 @@ static void draw_active_profile(lv_obj_t *canvas,
     // Draw a 3x3 rectangle
     lv_area_t coords = {0 + offset, 137, 0 + offset + 3, 137 + 3};
     lv_draw_rect(&layer, &rect_dsc, &coords);
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 // MC: mejor implementación
@@ -75,6 +77,7 @@ static void draw_active_profile_text(lv_obj_t *canvas,
     label_dsc.text = text;
     lv_area_t coords = {25, 32, 25 + 35, 32 + 20}; // Approx height
     lv_draw_label(&layer, &label_dsc, &coords);
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 void draw_profile_status(lv_obj_t *canvas, const struct status_state *state) {
