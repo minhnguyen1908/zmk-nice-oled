@@ -50,7 +50,7 @@
 #include <stdio.h>
 #include <zephyr/kernel.h>
 
-static void draw_layer_status(lv_obj_t *canvas, const struct status_state *state) {
+void draw_layer_status(lv_obj_t *canvas, const struct status_state *state) {
     lv_layer_t layer;
     lv_canvas_init_layer(canvas, &layer);
 

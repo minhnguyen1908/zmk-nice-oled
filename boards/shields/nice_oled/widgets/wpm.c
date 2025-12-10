@@ -60,7 +60,7 @@
     /** int needleEndX = 33 + (int)(25.45585 * cos(4.71239)); // 33 +*/
     /*(int)(25.45585 * 0) = 33*/
     /** int needleEndY = 66 + (int)(25.45585 * sin(4.71239)); 66 + (int)(25.45585 **/
-    /*-1) = 40 */*/
+    /*-1) = 40 */
     /*int needleStartX = centerX + (int)(offset * cos(angleRad));*/
     /*int needleStartY = centerY + (int)(offset * sin(angleRad));*/
     /*int needleEndX = centerX + (int)(radius * cos(angleRad));*/

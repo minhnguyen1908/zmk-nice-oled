@@ -31,12 +31,25 @@ static void draw_usb_connected(lv_obj_t *canvas) {
 }
 
 static void draw_ble_unbonded(lv_obj_t *canvas) {
+    /*
   lv_draw_image_dsc_t img_dsc;
   lv_draw_image_dsc_init(&img_dsc);
 
   // 36 - 39
   lv_canvas_draw_image(canvas, -1, 32, &bt_unbonded, &img_dsc);
   // lv_canvas_draw_image(canvas, 44, 0, &bt_unbonded, &img_dsc);
+  */
+    lv_layer_t layer;
+    lv_canvas_init_layer(canvas, &layer);
+
+    lv_draw_image_dsc_t img_dsc;
+    lv_draw_image_dsc_init(&img_dsc);
+    img_dsc.src = &bt_unbonded;
+
+    // Coords from your log: x=-1, y=32.
+    // Width/Height needs to be calculated (e.g. from header)
+    lv_area_t coords = {-1, 32, -1 + bt_unbonded.header.w - 1, 32 + bt_unbonded.header.h - 1};
+    lv_draw_image(&layer, &img_dsc, &coords);
 }
 #endif
 
