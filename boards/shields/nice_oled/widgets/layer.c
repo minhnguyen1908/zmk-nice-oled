@@ -5,9 +5,9 @@
 
 // MC: better implementation
 void draw_layer_status(lv_obj_t *canvas, const struct status_state *state) {
-  lv_draw_label_dsc_t label_dsc;
-  init_label_dsc(&label_dsc, LVGL_FOREGROUND, &pixel_operator_mono,
-                 LV_TEXT_ALIGN_LEFT);
+  /*lv_draw_label_dsc_t label_dsc;*/
+  /*init_label_dsc(&label_dsc, LVGL_FOREGROUND, &pixel_operator_mono,*/
+                 /*LV_TEXT_ALIGN_LEFT);*/
 
   char text[14] = {};
   int result;
@@ -29,5 +29,18 @@ void draw_layer_status(lv_obj_t *canvas, const struct status_state *state) {
     LV_LOG_WARN("truncated");
   }
 
-  lv_canvas_draw_text(canvas, 0, 146, 68, &label_dsc, text);
+  /*lv_canvas_draw_text(canvas, 0, 146, 68, &label_dsc, text);*/
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &pixel_operator_mono, LV_TEXT_ALIGN_LEFT);
+
+    char text[10] = {};
+    snprintf(text, sizeof(text), "LAYER: %s", state->layer_label ? state->layer_label : "BASE");
+
+    // NEW LAYER LOGIC
+    lv_layer_t layer;
+    lv_canvas_init_layer(canvas, &layer);
+    
+    label_dsc.text = text;
+    lv_area_t coords = {0, 146, 68, 146 + 20}; // Width 68 matches canvas width
+    lv_draw_label(&layer, &label_dsc, &coords);
 }
