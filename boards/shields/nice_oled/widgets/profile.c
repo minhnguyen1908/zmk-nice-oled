@@ -27,10 +27,10 @@ static void draw_inactive_profiles(lv_obj_t *canvas,
 
 static void draw_active_profile(lv_obj_t *canvas,
                                 const struct status_state *state) {
-  lv_draw_rect_dsc_t rect_white_dsc;
-  init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
+  /*lv_draw_rect_dsc_t rect_white_dsc;*/
+  /*init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);*/
 
-  int offset = state->active_profile_index * 7;
+  /*int offset = state->active_profile_index * 7;*/
 
   /*lv_canvas_draw_rect(canvas, 0 + offset, 137, 3, 3, &rect_white_dsc);*/
   // lv_canvas_draw_rect(canvas, 18 + offset, 129, 3, 3, &rect_white_dsc);
@@ -53,13 +53,13 @@ static void draw_active_profile(lv_obj_t *canvas,
 static void draw_active_profile_text(lv_obj_t *canvas,
                                      const struct status_state *state) {
   // new label_dsc
-  lv_draw_label_dsc_t label_dsc;
-  init_label_dsc(&label_dsc, LVGL_FOREGROUND, &pixel_operator_mono_8,
-                 LV_TEXT_ALIGN_LEFT);
+  /*lv_draw_label_dsc_t label_dsc;*/
+  /*init_label_dsc(&label_dsc, LVGL_FOREGROUND, &pixel_operator_mono_8,*/
+                 /*LV_TEXT_ALIGN_LEFT);*/
 
   // buffer size should be enough for largest number + null character
-  char text[14] = {};
-  snprintf(text, sizeof(text), "%d", state->active_profile_index + 1);
+  /*char text[14] = {};*/
+  /*snprintf(text, sizeof(text), "%d", state->active_profile_index + 1);*/
 
   /*lv_canvas_draw_text(canvas, 25, 32, 35, &label_dsc, text);*/
     //FIX: New Layer Logic for Text
