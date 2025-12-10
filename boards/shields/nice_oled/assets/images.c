@@ -21,10 +21,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_BOLT
         0x08, 0x10, 0x20, 0x40, 0xf8, 0x10, 0x20, 0x40, 0x80,
 };
 
-const lv_img_dsc_t bolt = {
+const lv_image_dsc_t bolt = {
     .header.cf = LV_COLOR_FORMAT_I1, //LV_IMG_CF_INDEXED_1BIT, edit to matched with new version 4.1.0
     /*.header.always_zero = 0,*/
-    .header.reserved = 0,
+    /*.header.reserved = 0,*/
     .header.w = 5,
     .header.h = 9,
     .data_size = 17,
@@ -51,10 +51,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_BT
         0xcb, 0x30, 0xda, 0x70, 0xf8, 0xf0, 0xf9, 0xf0, 0xfb, 0xf0,
 };
 
-const lv_img_dsc_t bt = {
+const lv_image_dsc_t bt = {
     .header.cf = LV_IMG_CF_INDEXED_1BIT,
-    .header.always_zero = 0,
-    .header.reserved = 0,
+    /*.header.always_zero = 0,*/
+    /*.header.reserved = 0,*/
     .header.w = 12,
     .header.h = 15,
     .data_size = 38,
@@ -80,10 +80,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST
         0xcb, 0x30, 0xdb, 0x90, 0xf8, 0xc0, 0xf9, 0xe0, 0xfb, 0xf0,
 };
 
-const lv_img_dsc_t bt_no_signal = {
+const lv_image_dsc_t bt_no_signal = {
     .header.cf = LV_IMG_CF_INDEXED_1BIT,
-    .header.always_zero = 0,
-    .header.reserved = 0,
+    /*.header.always_zero = 0,*/
+    /*.header.reserved = 0,*/
     .header.w = 12,
     .header.h = 15,
     .data_size = 38,
@@ -110,10 +110,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST
         0x00, 0x38, 0x00, 0x00, 0x30, 0x00, 0x00, 0x20, 0x00,
 };
 
-const lv_img_dsc_t bt_unbonded = {
+const lv_image_dsc_t bt_unbonded = {
     .header.cf = LV_IMG_CF_INDEXED_1BIT,
-    .header.always_zero = 0,
-    .header.reserved = 0,
+    /*.header.always_zero = 0,*/
+    /*.header.reserved = 0,*/
     .header.w = 22,
     .header.h = 15,
     .data_size = 53,
