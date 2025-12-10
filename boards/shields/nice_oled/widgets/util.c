@@ -34,10 +34,18 @@ void draw_background(lv_obj_t *canvas) {
 
   /*lv_canvas_draw_rect(canvas, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT,*/
                       /*&rect_black_dsc);*/
+    // 1. Declare and Init the descriptor
+    lv_draw_rect_dsc_t draw_dsc;
+    init_rect_dsc(&draw_dsc, LVGL_BACKGROUND);
+
+    // 2. Setup Layer
     lv_layer_t layer;
     lv_canvas_init_layer(canvas, &layer);
 
+    // 3. Define Area
     lv_area_t coords = {0, 0, CANVAS_WIDTH - 1, CANVAS_HEIGHT - 1};
+
+    // 4. Draw using the variable 'draw_dsc'
     lv_draw_rect(&layer, &draw_dsc, &coords);
 }
 

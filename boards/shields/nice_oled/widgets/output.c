@@ -12,8 +12,22 @@ static void draw_usb_connected(lv_obj_t *canvas) {
   lv_draw_image_dsc_t img_dsc;
   lv_draw_image_dsc_init(&img_dsc);
 
-  lv_canvas_draw_image(canvas, 0, 34, &usb, &img_dsc);
+  /*lv_canvas_draw_image(canvas, 0, 34, &usb, &img_dsc);*/
   // lv_canvas_draw_image(canvas, 45, 2, &usb, &img_dsc);
+    // 1. Layer
+    lv_layer_t layer;
+    lv_canvas_init_layer(canvas, &layer);
+
+    // 2. Descriptor
+    lv_draw_image_dsc_t img_dsc;
+    lv_draw_image_dsc_init(&img_dsc);
+    img_dsc.src = &usb;
+
+    // 3. Coords (10x20 size)
+    lv_area_t coords = {0, 34, 0 + 10 - 1, 34 + 20 - 1};
+
+    // 4. Draw (Use lv_draw_image, NOT lv_canvas_draw_image)
+    lv_draw_image(&layer, &img_dsc, &coords);
 }
 
 static void draw_ble_unbonded(lv_obj_t *canvas) {
