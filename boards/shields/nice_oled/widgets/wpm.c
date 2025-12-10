@@ -27,9 +27,9 @@ static void draw_needle(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_line_dsc_t line_dsc;
     init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
 
-    int centerX = 12;
-    int centerY = 90;
-    int offset = 5;
+    int centerX = 12; 
+    int centerY = 90; 
+    int offset = 5;   
     int value = state->wpm[9];
 
     float max = 0;
@@ -39,6 +39,7 @@ static void draw_needle(lv_obj_t *canvas, const struct status_state *state) {
     if (max == 0) max = 100;
     if (value > max) value = max;
 
+    // Fix float/double warnings by using 225.0f etc
     float angleDeg = 225.0f + ((float)value / max) * 90.0f;
     float angleRad = angleDeg * (3.14159f / 180.0f);
 
@@ -114,7 +115,12 @@ static void draw_label(lv_obj_t *canvas, const struct status_state *state) {
     snprintf(wpm_text, sizeof(wpm_text), "%d", state->wpm[9]);
     label_dsc.text = wpm_text;
 
-    int x_pos = (state->wpm[9] < 10) ? 12 : (state->wpm[9] < 100 ? 9 : 7);
+    // Kept your positioning logic
+    int x_pos;
+    if (state->wpm[9] < 10) x_pos = 12;
+    else if (state->wpm[9] < 100) x_pos = 9;
+    else x_pos = 7;
+    
     lv_area_t coords = {x_pos, 75, x_pos + 50, 75 + 20};
     lv_draw_label(&layer, &label_dsc, &coords);
     
