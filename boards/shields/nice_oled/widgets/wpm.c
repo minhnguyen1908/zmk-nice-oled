@@ -2,6 +2,7 @@
 #include "../assets/custom_fonts.h"
 #include <math.h>
 #include <zephyr/kernel.h>
+#include <stdio.h>
 
 LV_IMAGE_DECLARE(gauge);
 LV_IMAGE_DECLARE(grid);
@@ -11,12 +12,12 @@ static void draw_gauge(lv_obj_t *canvas, const struct status_state *state) {
     lv_canvas_init_layer(canvas, &layer);
 
     lv_draw_image_dsc_t img_dsc;
-    lv_draw_image_dsc_init(&img_dsc);
-    img_dsc.src = &gauge;
+    init_image_dsc(&img_dsc, &gauge);
 
     lv_area_t coords = {0, 70, 0 + gauge.header.w - 1, 70 + gauge.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
-    lv_canvas_finish_layer(canvas, &layer);
+    
+    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
 }
 
 static void draw_needle(lv_obj_t *canvas, const struct status_state *state) {
@@ -38,7 +39,6 @@ static void draw_needle(lv_obj_t *canvas, const struct status_state *state) {
     if (max == 0) max = 100;
     if (value > max) value = max;
 
-    // Use 'f' suffix for floats to silence warnings
     float angleDeg = 225.0f + ((float)value / max) * 90.0f;
     float angleRad = angleDeg * (3.14159f / 180.0f);
 
@@ -53,7 +53,8 @@ static void draw_needle(lv_obj_t *canvas, const struct status_state *state) {
     line_dsc.p2.y = needleEndY;
     
     lv_draw_line(&layer, &line_dsc);
-    lv_canvas_finish_layer(canvas, &layer);
+    
+    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
 }
 
 #if !IS_ENABLED(CONFIG_NICE_OLED_WIDGET_WPM_LUNA)
@@ -62,12 +63,12 @@ static void draw_grid(lv_obj_t *canvas) {
     lv_canvas_init_layer(canvas, &layer);
 
     lv_draw_image_dsc_t img_dsc;
-    lv_draw_image_dsc_init(&img_dsc);
-    img_dsc.src = &grid;
+    init_image_dsc(&img_dsc, &grid);
 
     lv_area_t coords = {-1, 95, -1 + grid.header.w - 1, 95 + grid.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &coords);
-    lv_canvas_finish_layer(canvas, &layer);
+    
+    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
 }
 
 static void draw_graph(lv_obj_t *canvas, const struct status_state *state) {
@@ -88,7 +89,7 @@ static void draw_graph(lv_obj_t *canvas, const struct status_state *state) {
     if (range == 0) range = 1;
 
     for (int i = 0; i < 10; i++) {
-        points[i].x = 0 + i * 7; // Approx spacing
+        points[i].x = 0 + i * 7;
         points[i].y = 97 - (state->wpm[i] - min) * 32 / range;
     }
 
@@ -96,8 +97,9 @@ static void draw_graph(lv_obj_t *canvas, const struct status_state *state) {
         line_dsc.p1 = points[i];
         line_dsc.p2 = points[i+1];
         lv_draw_line(&layer, &line_dsc);
-        lv_canvas_finish_layer(canvas, &layer);
     }
+    
+    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
 }
 #endif
 
@@ -115,7 +117,8 @@ static void draw_label(lv_obj_t *canvas, const struct status_state *state) {
     int x_pos = (state->wpm[9] < 10) ? 12 : (state->wpm[9] < 100 ? 9 : 7);
     lv_area_t coords = {x_pos, 75, x_pos + 50, 75 + 20};
     lv_draw_label(&layer, &label_dsc, &coords);
-    lv_canvas_finish_layer(canvas, &layer);
+    
+    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
 }
 
 void draw_wpm_status(lv_obj_t *canvas, const struct status_state *state) {
