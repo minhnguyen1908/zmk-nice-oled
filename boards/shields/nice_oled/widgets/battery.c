@@ -63,6 +63,7 @@ static void animation_smart_battery_off(lv_obj_t *canvas) {
 #endif
 
 static void draw_level(lv_obj_t *canvas, const struct status_state *state) {
+    // 1. Declare and Init Layer (FIXED)
     lv_layer_t layer;
     lv_canvas_init_layer(canvas, &layer);
 
@@ -75,11 +76,13 @@ static void draw_level(lv_obj_t *canvas, const struct status_state *state) {
 
     lv_area_t coords = {0, 50, 0 + 42, 50 + 20}; 
     lv_draw_label(&layer, &label_right_dsc, &coords);
-    
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+
+    // 2. Finish Layer
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 static void draw_charging_level(lv_obj_t *canvas, const struct status_state *state) {
+    // 1. Declare and Init Layer (FIXED)
     lv_layer_t layer;
     lv_canvas_init_layer(canvas, &layer);
 
@@ -98,8 +101,9 @@ static void draw_charging_level(lv_obj_t *canvas, const struct status_state *sta
 
     lv_area_t img_coords = {25, 50, 25 + bolt.header.w - 1, 50 + bolt.header.h - 1};
     lv_draw_image(&layer, &img_dsc, &img_coords);
-    
-    lv_canvas_finish_layer(canvas, &layer); // <--- CRITICAL FIX
+
+    // 2. Finish Layer
+    lv_canvas_finish_layer(canvas, &layer);
 }
 
 void draw_battery_status(lv_obj_t *canvas, const struct status_state *state) {
